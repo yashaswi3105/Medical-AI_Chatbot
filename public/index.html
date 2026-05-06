@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Medical AI Assistant</title>
+
+    <!-- Font (optional but makes it modern) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="chat-container">
+
+    <!-- 🔥 HEADER -->
+    <h1 class="title">🩺 Medical AI Assistant</h1>
+
+    <p class="subtitle">
+    Ask medical and healthcare-related questions only
+    </p>
+
+    <p class="warning">
+    ⚠️ This chatbot is for educational purposes only and not a substitute for professional medical advice.
+    </p>
+
+    <!-- 💬 CHAT AREA -->
+    <div id="chatBox">
+
+        <div class="message bot">
+            🩺 Hello! I am your Medical AI Assistant.
+            Ask me healthcare-related questions.
+        </div>
+
+    </div>
+
+    <!-- ⌨️ INPUT AREA -->
+    <div class="input-area">
+        <input 
+            id="input" 
+            type="text" 
+            placeholder="Ask a medical question..." 
+            autocomplete="off"
+        >
+        <button onclick="send()">🩺 Ask</button>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
