@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from groq import Groq
 from dotenv import load_dotenv
@@ -19,6 +19,12 @@ client = Groq(
 )
 
 # Chat route
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return send_from_directory("public", "index.html")
+
 @app.route("/chat", methods=["POST"])
 def chat():
 
