@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 from groq import Groq
 from dotenv import load_dotenv
@@ -8,7 +8,11 @@ import os
 load_dotenv()
 
 # Flask app
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_folder="public",
+    static_url_path=""
+)
 
 # Enable CORS
 CORS(app)
@@ -18,13 +22,12 @@ client = Groq(
     api_key=os.getenv("GROQ_API_KEY")
 )
 
-# Chat route
-app = Flask(__name__)
-
+# Homepage route
 @app.route("/")
 def home():
-    return send_from_directory("public", "index.html")
+    return app.send_static_file("index.html")
 
+# Chat route
 @app.route("/chat", methods=["POST"])
 def chat():
 
@@ -40,7 +43,7 @@ def chat():
         # Extract user message
         user_message = data.get("message", "")
 
-        # Send to Groq AI
+        # Send message to Groq AI
         response = client.chat.completions.create(
 
             model="llama-3.1-8b-instant",
@@ -59,11 +62,12 @@ def chat():
                     - Only answer medical and healthcare questions.
                     - Refuse unrelated topics politely.
                     - Never answer coding, sports, politics,
-                    finance, movies, gamaing, or entertainment.
+                    finance, movies, gaming, or entertainment.
                     - Use simple language.
                     - Keep answers concise and educational.
                     - Do not provide dangerous medical advice.
-                    - If the question is unrelated to medicine,
+
+                    If the question is unrelated to medicine,
                     reply ONLY with:
 
                     "I only answer medical-related questions."
@@ -97,7 +101,7 @@ def chat():
         return jsonify({
             "reply": reply
         })
-    
+
     except Exception as e:
 
         print("ERROR:", e)
@@ -105,7 +109,7 @@ def chat():
         return jsonify({
             "reply": "Server error occurred."
         })
-    
+
 # Run Flask server
 if __name__ == "__main__":
 
